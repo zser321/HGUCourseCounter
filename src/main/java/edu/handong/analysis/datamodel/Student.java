@@ -5,15 +5,21 @@ import java.util.HashMap;
 
 public class Student {
 	private String studentId;
-	private ArrayList<Course> coursesTaken; 
+	private ArrayList<Course> coursesTaken = null; 
 	private HashMap<String,Integer> semestersByYearAndSemester;
 	
 	public Student(String studentId) {
 		this.studentId = studentId;
 	}
 	public void addCourse(Course newRecord) {
+		if(coursesTaken == null) {
 		coursesTaken = new ArrayList<Course>();
 		coursesTaken.add(newRecord);
+		}
+		else
+		{
+			coursesTaken.add(newRecord);
+		}
 	}
 	
 	public String getStudentId() {
@@ -32,8 +38,8 @@ public class Student {
 				num++;
 				semestersByYearAndSemester.put(keyCheck, num);
 			}
-			System.out.println(keyCheck);
-			System.out.println(num);
+			//System.out.println(keyCheck);
+			//System.out.println(num);
 		}
 		
 		return semestersByYearAndSemester;
@@ -42,12 +48,20 @@ public class Student {
 	public int getNumCourseInNthSemester(int semester) {
 		int count = 0;		
 		HashMap<String,Integer> semesterNum = getSemestersByYearAndSemester();
-		
-		for(String key : semesterNum.keySet()) {
-			if(semesterNum.get(key) == semester )
+		String result = null;
+		String keyCheck = null;
+		for(String key : semesterNum.keySet())
+		{
+			if(semester == semesterNum.get(key)) {
+				result = key;
+			}
+		}
+		for(Course c : coursesTaken) {
+			keyCheck = c.getYearTaken() + "-" + c.getSemesterCourseTaken();
+			if(keyCheck.equals(result))
 			{
 				count++;
-			}
+			}	
 		}
 		return count;
 	}
