@@ -3,12 +3,13 @@ package edu.handong.analysis;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
 
 import edu.handong.analysis.datamodel.Course;
 import edu.handong.analysis.datamodel.Student;
-import edu.handong.analysise.utils.NotEnoughArgumentException;
-import edu.handong.analysise.utils.Utils;
+import edu.handong.analysis.utils.NotEnoughArgumentException;
+import edu.handong.analysis.utils.Utils;
 
 public class HGUCoursePatternAnalyzer {
 
@@ -27,12 +28,13 @@ public class HGUCoursePatternAnalyzer {
 				throw new NotEnoughArgumentException();
 		} catch (NotEnoughArgumentException e) {
 			System.out.println(e.getMessage());
-			System.exit(0);
+			System.exit(0); 
 		}
 		
 		String dataPath = args[0]; // csv file to be analyzed
 		String resultPath = args[1]; // the file path where the results are saved.
 		ArrayList<String> lines = Utils.getLines(dataPath, true);
+		
 		
 		students = loadStudentCourseRecords(lines);
 		
@@ -44,10 +46,12 @@ public class HGUCoursePatternAnalyzer {
 		
 		// Write a file (named like the value of resultPath) with linesTobeSaved.
 		Utils.writeAFile(linesToBeSaved, resultPath);
+		
 	}
 	
 	/**
-	 * This method create HashMap<String,Student> from the data csv file. Key is a student id and the corresponding object is an instance of Student.
+	 * This method create HashMap<String,Student> from the data csv file.
+	 *  Key is a student id and the corresponding object is an instance of Student.
 	 * The Student instance have all the Course instances taken by the student.
 	 * @param lines
 	 * @return
@@ -55,27 +59,71 @@ public class HGUCoursePatternAnalyzer {
 	private HashMap<String,Student> loadStudentCourseRecords(ArrayList<String> lines) {
 		
 		// TODO: Implement this method
+		HashMap<String,Student> courseRecord = new HashMap<String,Student>();
 		
-		return null; // do not forget to return a proper variable.
+		ArrayList<Course> courseStore = new ArrayList<Course>();
+		
+		for(String line : lines) {
+			Course c = new Course(line);
+			courseStore.add(c);
+		}/*
+		for(int i=0; i<courseStore.size();i++)
+		{
+			if(courseRecord.containsKey(courseStore.get(i).getStudentId()))
+			{
+				courseRecord.get(courseStore.get(i).getStudentId()).addCourse(courseStore.get(i));
+			}
+			else {
+				Student s = new Student(courseStore.get(i).getStudentId());
+				courseRecord.put(courseStore.get(i).getStudentId(), s);
+			}*/
+				
+		for(Course c : courseStore)
+		{
+			String id = c.getStudentId();
+			if(courseRecord.containsKey(id))
+			{
+				courseRecord.get(id).addCourse(c);
+			}
+			else {
+				Student s = new Student(id);
+				courseRecord.put(id, s);
+			}		
+		}
+				
+		
+		//System.out.println("여기까지");
+		return courseRecord; // do not forget to return a proper variable.
 	}
 
 	/**
-	 * This method generate the number of courses taken by a student in each semester. The result file look like this:
+	 * This method generate the number of courses taken by a student in each semester. 
+	 * The result file look like this:
 	 * StudentID, TotalNumberOfSemestersRegistered, Semester, NumCoursesTakenInTheSemester
 	 * 0001,14,1,9
      * 0001,14,2,8
 	 * ....
 	 * 
-	 * 0001,14,1,9 => this means, 0001 student registered 14 semeters in total. In the first semeter (1), the student took 9 courses.
+	 * 0001,14,1,9 => this means, 0001 student registered 14 semeters in total.
+	 *  In the first semeter (1), the student took 9 courses.
 	 * 
 	 * 
 	 * @param sortedStudents
 	 * @return
 	 */
 	private ArrayList<String> countNumberOfCoursesTakenInEachSemester(Map<String, Student> sortedStudents) {
-		
-		// TODO: Implement this method
-		
-		return null; // do not forget to return a proper variable.
+		ArrayList<String> result = new ArrayList<String>();
+		result.add("StudentID, TotalNumberOfSemestersRegistered, Semester, NumCoursesTakenInTheSemester");
+		/*
+		for(String key : sortedStudents.keySet()) {
+		Set<String> getSem = sortedStudents.get(key).getSemestersByYearAndSemester().keySet();
+		result.add(key + ", " + sortedStudents.get(key).getSemestersByYearAndSemester().size() +
+				", " + sortedStudents.get(key).getSemestersByYearAndSemester().get(getSem) + 
+				", " + sortedStudents.get(key).getNumCourseInNthSemester(sortedStudents.get(key).getSemestersByYearAndSemester().get(getSem)));
+		}
+		*/
+		//for(String key : sortedStudents.keySet())
+		System.out.println(sortedStudents.get("0001").getSemestersByYearAndSemester().size());
+		return result; // do not forget to return a proper variable.
 	}
 }
