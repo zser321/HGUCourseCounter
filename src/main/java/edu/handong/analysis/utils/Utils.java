@@ -32,17 +32,19 @@ public class Utils {
 	public static void writeAFile(ArrayList<String> lines, String targetFileName) {
 		String fileName = targetFileName;
 		PrintWriter outputStream = null;
-		//String directoryPath = targetFileName.split("\")[targetFileName.split(",").length];
+		
 		try {
+			File theDir = new File(fileName);
+			if (!theDir.getParentFile().exists()) {
+				theDir.getParentFile().mkdirs();
+			}
 			outputStream = new PrintWriter(fileName);
-			/*
-			File theDir = new File(directoryPath);
-			if (!theDir.exists()) theDir.mkdirs();
-			*/
+			
 		}
 		catch(FileNotFoundException e)
 		{
-			System.out.println("The file path does not exist. Please check your CLI argument! ");
+			
+			System.out.println(e.getMessage());
 			System.exit(0);
 		}
 		

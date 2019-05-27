@@ -80,6 +80,7 @@ public class HGUCoursePatternAnalyzer {
 			else {
 				Student s = new Student(id);
 				courseRecord.put(id, s);
+				courseRecord.get(id).addCourse(c);
 			}		
 		}
 		//System.out.println("여기까지");
@@ -113,8 +114,8 @@ public class HGUCoursePatternAnalyzer {
 		}
 		*/for(String key : sortedStudents.keySet()) {
 		for(int i = 1 ; i <= sortedStudents.get(key).getSemestersByYearAndSemester().size() ; i++ )
-		result.add(key + ", " + sortedStudents.get(key).getSemestersByYearAndSemester().size()
-				+ ", " + i + ", " + sortedStudents.get(key).getNumCourseInNthSemester(i));
+		result.add(key + "," + sortedStudents.get(key).getSemestersByYearAndSemester().size()
+				+ "," + i + "," + sortedStudents.get(key).getNumCourseInNthSemester(i));
 		}
 		/*for(String key : sortedStudents.keySet()) {
 			//System.out.println(sortedStudents.get("0002").getNumCourseInNthSemester(2));
