@@ -39,7 +39,7 @@ public class Course {
 	public Course(String line) {
 		String[] data = line.split(",");
 
-		//data = line.split(",").trim();
+		
 		
 		setStudentId(data[0].trim());
 		yearMonthGraduated = data[1].trim();

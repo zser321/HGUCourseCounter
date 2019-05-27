@@ -35,9 +35,6 @@ public class HGUCoursePatternAnalyzer {
 		String resultPath = args[1]; // the file path where the results are saved.
 		ArrayList<String> lines = Utils.getLines(dataPath, true);
 		
-		/*for(String line : lines)
-		System.out.println(line);
-		*/
 		students = loadStudentCourseRecords(lines);
 		
 		// To sort HashMap entries by key values so that we can save the results by student ids in ascending order.
@@ -83,7 +80,7 @@ public class HGUCoursePatternAnalyzer {
 				courseRecord.get(id).addCourse(c);
 			}		
 		}
-		//System.out.println("여기까지");
+		
 		return courseRecord; // do not forget to return a proper variable.
 	}
 
@@ -105,26 +102,13 @@ public class HGUCoursePatternAnalyzer {
 	private ArrayList<String> countNumberOfCoursesTakenInEachSemester(Map<String, Student> sortedStudents) {
 		ArrayList<String> result = new ArrayList<String>();
 		result.add("StudentID, TotalNumberOfSemestersRegistered, Semester, NumCoursesTakenInTheSemester");
-		/*
+		
 		for(String key : sortedStudents.keySet()) {
-		Set<String> getSem = sortedStudents.get(key).getSemestersByYearAndSemester().keySet();
-		result.add(key + ", " + sortedStudents.get(key).getSemestersByYearAndSemester().size() +
-				", " + sortedStudents.get(key).getSemestersByYearAndSemester().get(getSem) + 
-				", " + sortedStudents.get(key).getNumCourseInNthSemester(sortedStudents.get(key).getSemestersByYearAndSemester().get(getSem)));
-		}
-		*/for(String key : sortedStudents.keySet()) {
 		for(int i = 1 ; i <= sortedStudents.get(key).getSemestersByYearAndSemester().size() ; i++ )
 		result.add(key + "," + sortedStudents.get(key).getSemestersByYearAndSemester().size()
 				+ "," + i + "," + sortedStudents.get(key).getNumCourseInNthSemester(i));
 		}
-		/*for(String key : sortedStudents.keySet()) {
-			//System.out.println(sortedStudents.get("0002").getNumCourseInNthSemester(2));
-			for(int i = 1 ; i <= sortedStudents.get(key).getSemestersByYearAndSemester().size() ; i++ )
-		System.out.println(key + ", " + sortedStudents.get(key).getSemestersByYearAndSemester().size()
-				+ ", " + i + ", " + sortedStudents.get(key).getNumCourseInNthSemester(i));
-				
-		}
-		*/
+		
 		return result; // do not forget to return a proper variable.
 	}
 }

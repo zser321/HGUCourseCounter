@@ -38,8 +38,7 @@ public class Student {
 				num++;
 				semestersByYearAndSemester.put(keyCheck, num);
 			}
-			//System.out.println(keyCheck);
-			//System.out.println(num);
+			
 		}
 		
 		return semestersByYearAndSemester;
