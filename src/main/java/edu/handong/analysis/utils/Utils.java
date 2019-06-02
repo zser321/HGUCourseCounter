@@ -34,9 +34,9 @@ public class Utils {
 		PrintWriter outputStream = null;
 		
 		try {
-			File theDir = new File(fileName);
-			if (!theDir.getParentFile().exists()) {
-				theDir.getParentFile().mkdirs();
+			File file = new File(fileName);
+			if (!file.getParentFile().exists()) {
+				file.getParentFile().mkdirs();
 			}
 			outputStream = new PrintWriter(fileName);
 			

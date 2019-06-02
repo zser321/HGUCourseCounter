@@ -6,6 +6,13 @@ import java.util.HashMap;
 public class Student {
 	private String studentId;
 	private ArrayList<Course> coursesTaken = null; 
+	public ArrayList<Course> getCoursesTaken() {
+		return coursesTaken;
+	}
+	public void setCoursesTaken(ArrayList<Course> coursesTaken) {
+		this.coursesTaken = coursesTaken;
+	}
+
 	private HashMap<String,Integer> semestersByYearAndSemester;
 	
 	public Student(String studentId) {
